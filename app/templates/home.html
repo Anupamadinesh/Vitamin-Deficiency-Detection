@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background: url("{{ url_for('static', filename='img/bg1.jpeg') }}") no-repeat center center fixed;
+        background-size: cover;
+        font-family: 'Poppins', sans-serif;
+        color: white;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        display: flex;
+        justify-content: flex-start; /* Align content to the left */
+        align-items: center;
+        min-height: 100vh;
+        padding: 40px;
+    }
+
+    .content {
+        text-align:left;
+        max-width: 600px;
+    }
+
+    .content h1 {
+        font-size: 48px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .content p {
+        font-size: 20px;
+        margin-bottom: 30px;
+    }
+
+    .btn-start {
+        background: #17a2b8;
+        padding: 12px 25px;
+        border-radius: 25px;
+        color: white;
+        font-size: 18px;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-start:hover {
+        background: #138496;
+    }
+</style>
+
+<div class="container">
+    <div class="content">
+        <h1>Vitamin Deficiency Detection</h1>
+        <p>Smart AI to help you detect vitamin deficiencies from images.</p>
+        <a href="{{ url_for('main.login') }}" class="btn-start">Get Started</a>
+    </div>
+</div>
+{% endblock %}

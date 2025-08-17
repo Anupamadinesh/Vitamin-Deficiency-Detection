@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background: url("{{ url_for('static', filename='img/about.jpeg') }}") no-repeat center center fixed;
+        background-size: cover;
+        font-family: 'Poppins', sans-serif;
+        color: #000; /* Changed to black */
+    }
+
+    .contact-container {
+        max-width: 800px;
+        margin: 100px auto;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.3);
+        text-align: center;
+    }
+
+    .contact-container h2 {
+        font-size: 36px;
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: #000; /* Heading in black */
+        text-shadow: none;
+    }
+
+    .contact-container p {
+        font-size: 18px;
+        margin-bottom: 30px;
+        color: #000; /* Paragraph text in black */
+    }
+
+    .contact-details {
+        font-size: 16px;
+        line-height: 1.8;
+        margin-bottom: 40px;
+        color: #000; /* Contact info text in black */
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        width: 100%;
+        padding: 12px 15px;
+        margin: 10px 0;
+        border-radius: 8px;
+        border: none;
+        background: rgba(255, 255, 255, 0.6);
+        color: #000; /* Input text in black */
+        font-size: 16px;
+    }
+
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder {
+        color: #444; /* Darker placeholder for better visibility */
+    }
+
+    .contact-form button {
+        background: linear-gradient(135deg, #36d1dc, #5b86e5);
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 50px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .contact-form button:hover {
+        background: linear-gradient(135deg, #5b86e5, #36d1dc);
+    }
+
+</style>
+<div class="contact-container">
+<h2>Contact Us</h2>
+<p>If you have any questions, feel free to reach out to us at:</p>
+<p> support@gmail.com</p>
+</div>
+{% endblock %}

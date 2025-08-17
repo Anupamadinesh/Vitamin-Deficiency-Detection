@@ -1,0 +1,22 @@
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore virtual environments
+venv/
+.venv/
+
+# Ignore datasets
+dataset/
+dataset_augmented/
+datas/
+newdataset/
+split_data/
+testimages/
+
+# Ignore model files
+*.h5
+
+# Ignore IDE/editor settings
+*.vscode/
+*.idea/

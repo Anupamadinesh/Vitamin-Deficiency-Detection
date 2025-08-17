@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Prediction History{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Prediction History</h2>
+
+    {% if predictions %}
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Image Filename</th>
+                    <th>Prediction</th>
+                    <th>Predicted At</th>
+                    <th>Vitamin</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for prediction in predictions %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ prediction.image_filename }}</td>
+                    <td>{{ prediction.prediction_result }}</td>
+                    <td>{{ prediction.predicted_at }}</td>
+                    <td>{{ prediction.vitamin }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="text-center">No prediction history found.</p>
+    {% endif %}
+</div>
+{% endblock %}
+
+    <a href="{{ url_for('main.dashboard') }}" class="btn btn-secondary">← Back to Dashboard</a>
+</div>
+

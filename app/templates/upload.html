@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Upload Image{% endblock %}
+
+{% block content %}
+
+<style>
+    body {
+        background-image: url("{{ url_for('static', filename='img/remedies1.jpeg') }}");
+        background-size:cover;
+    }
+</style>
+
+<div class="container mt-5 text-center">
+    <h2 class="mb-4">Upload Image for Vitamin Deficiency Detection</h2>
+
+    <form action="{{ url_for('predict.upload_image') }}" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <input type="file" name="image" class="form-control" onchange="previewImage(event)" accept="image/*" required>
+        </div>
+
+        <div class="mb-3">
+            <img id="preview" src="#" alt="Image Preview" style="display:none; max-height:300px;" class="img-thumbnail" />
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Check Deficiency</button>
+    </form>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert alert-warning mt-4">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+</div>
+
+<script>
+function previewImage(event) {
+    const reader = new FileReader();
+    reader.onload = function () {
+        const output = document.getElementById('preview');
+        output.src = reader.result;
+        output.style.display = 'block';
+    };
+    reader.readAsDataURL(event.target.files[0]);
+}
+</script>
+{% endblock %}

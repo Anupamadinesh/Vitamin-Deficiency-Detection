@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Daily Diet Recommendation</h2>
+
+    <!-- Search bar -->
+    <input type="text" id="foodSearch" class="form-control mb-3" placeholder="Search for a food item...">
+
+    <!-- Food selection with categories -->
+    <form method="POST" action="{{ url_for('tools.diet_recommendation') }}">
+        <label for="foods"><strong>Select the foods you ate today:</strong></label>
+        <div class="mb-3" id="foodContainer">
+
+            <!-- Example Category: Dairy -->
+            <h6 class="mt-3">Dairy Products</h6>
+            {% for food in food_list %}
+                {% if food in ['milk', 'paneer', 'yogurt','butter','cheese'] %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="foods" value="{{ food }}" id="{{ food }}">
+                        <label class="form-check-label" for="{{ food }}">{{ food|capitalize }}</label>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            <h6 class="mt-3">Vegetables</h6>
+            {% for food in food_list %}
+                {% if food in ['spinach', 'carrot', 'potato', 'tomato', 'sweet potato', 'beetroot', 'mushroom','Radish','cucumber','beetroot'] %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="foods" value="{{ food }}" id="{{ food }}">
+                        <label class="form-check-label" for="{{ food }}">{{ food|capitalize }}</label>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            <h6 class="mt-3">Fruits & Nuts</h6>
+            {% for food in food_list %}
+                {% if food in ['banana', 'oranges', 'almonds', 'sunflower seeds','pomegranate','Walnuts','Cashews','Dates','Raisins','Apple','papaya',
+                'Guava','Avocado','Jackfruit','Mango','Grapes','Watermelon'] %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="foods" value="{{ food }}" id="{{ food }}">
+                        <label class="form-check-label" for="{{ food }}">{{ food|capitalize }}</label>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            <h6 class="mt-3">Proteins & Grains</h6>
+            {% for food in food_list %}
+                {% if food in ['dal', 'rice', 'chicken', 'fish', 'egg', 'tofu','Millet','Oats','Soyabean','Peas','Wheat'] %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="foods" value="{{ food }}" id="{{ food }}">
+                        <label class="form-check-label" for="{{ food }}">{{ food|capitalize }}</label>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <!-- Lifestyle Section -->
+        <label class="mt-4"><strong>Lifestyle:</strong></label>
+
+        <div class="form-check">
+            <input type="checkbox" name="lifestyle" value="indoor" class="form-check-input" id="indoor">
+            <label class="form-check-label" for="indoor">Mostly indoors (low sunlight)</label>
+        </div>
+        
+        <div class="form-check">
+            <input type="checkbox" name="lifestyle" value="vegetarian" class="form-check-input" id="vegetarian">
+            <label class="form-check-label" for="vegetarian">Vegetarian</label>
+        </div>
+        
+        <div class="form-check">
+            <input type="checkbox" name="lifestyle" value="vegan" class="form-check-input" id="vegan">
+            <label class="form-check-label" for="vegan">Vegan (no animal products)</label>
+        </div>
+        
+        <div class="form-check">
+            <input type="checkbox" name="lifestyle" value="pregnant" class="form-check-input" id="pregnant">
+            <label class="form-check-label" for="pregnant">Pregnant or nursing</label>
+        </div>
+        
+        <div class="form-check">
+            <input type="checkbox" name="lifestyle" value="athlete" class="form-check-input" id="athlete">
+            <label class="form-check-label" for="athlete">Active lifestyle (athlete/fitness)</label>
+        </div>
+        
+        <div class="form-check">
+            <input type="checkbox" name="lifestyle" value="elderly" class="form-check-input" id="elderly">
+            <label class="form-check-label" for="elderly">Elderly (age 60+)</label>
+        </div>
+        
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary mt-4">Get Vitamin Advice</button>
+    </form>
+
+    <!-- Vitamin Suggestions -->
+    {% if suggestions %}
+    <div class="mt-5">
+        <h4>What You Can Eat:</h4>
+        <div class="row">
+            {% for vitamin, foods in suggestions.items() %}
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-header bg-success text-white"><strong>{{ vitamin }}</strong></div>
+                    <ul class="list-group list-group-flush">
+                        {% for food in foods %}
+                        <li class="list-group-item">{{ food }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Missing Vitamins -->
+    {% if result is not none %}
+        {% if result|length == 0 %}
+            <div class="mt-4 alert alert-success">
+                <h5>Great job!</h5>
+                <p>Your diet today includes all the key vitamins. 🎉</p>
+            </div>
+        {% else %}
+            <div class="mt-4 alert alert-warning">
+                <h5>Possible Missing Vitamins:</h5>
+                <ul>
+                    {% for vitamin in result %}
+                        <li>{{ vitamin }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    {% endif %}
+</div>
+
+<!-- JavaScript for food search -->
+<script>
+    document.getElementById("foodSearch").addEventListener("input", function () {
+        const query = this.value.toLowerCase();
+        document.querySelectorAll("#foodContainer .form-check").forEach(function (el) {
+            el.style.display = el.textContent.toLowerCase().includes(query) ? '' : 'none';
+        });
+    });
+</script>
+
+{% if suggestions %}
+<!-- Toast Message -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+  <div id="vitaminToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        ✅ Vitamin advice updated! Scroll down to see suggestions.
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+
+<!-- Script to show toast -->
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        const toastEl = document.getElementById('vitaminToast');
+        const toast = new bootstrap.Toast(toastEl);
+        toast.show();
+    });
+</script>
+{% endif %}
+
+{% endblock %}

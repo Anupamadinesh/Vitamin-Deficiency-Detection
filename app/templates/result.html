@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% block title %}Prediction Result{% endblock %}
+
+{% block content %}
+<style>
+    .result-box {
+        background: #fff;
+        border-radius: 15px;
+        padding: 40px;
+        margin-top: 40px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .result-box img {
+        max-width: 300px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .result-box h3 {
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .btn-group a {
+        display: inline-block;
+        margin: 10px;
+        padding: 10px 20px;
+        background: #17a2b8;
+        color: white;
+        text-decoration: none;
+        border-radius: 25px;
+    }
+
+    .btn-group a:hover {
+        background: #138496;
+    }
+
+    .description {
+        font-size: 17px;
+        color: #555;
+        margin-top: 15px;
+        text-align: left;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+
+    .highlight {
+        font-weight: bold;
+        color: #007bff;
+        font-size: 1.3rem;
+    }
+
+    .image-comparison {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
+    }
+
+    .image-comparison .img-section {
+        text-align: center;
+    }
+
+    .img-section h5 {
+        margin-bottom: 10px;
+    }
+
+       ul.bullet-points {
+        text-align: left;
+        padding-left: 20px;
+        margin-top: 10px;
+    }
+
+    ul.bullet-points li {
+        margin-bottom: 8px;
+        color: #444;
+    }
+</style>
+
+<div class="container">
+    <div class="result-box mx-auto col-md-10">
+        <h3>🩺 Prediction Result</h3>
+
+        <!-- Show original and clustered images side by side -->
+        <div class="image-comparison">
+            {% if uploaded_img %}
+                <div class="img-section">
+                    <h5>Original Image</h5>
+                    <img src="{{ url_for('static', filename=uploaded_img) }}" alt="Original Image">
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Show Prediction -->
+        {% if prediction_result %}
+            <p class="highlight mt-4">
+                🧪 <strong>Detected Vitamin Deficiency:</strong>
+                <span style="font-size: 1.4em;">{{ prediction_result }}</span>
+            </p>
+        {% endif %}
+<!-- Vitamin Description Section -->
+ 
+    {% if description.paragraph %}
+        <p class="lead">{{ description.paragraph }}</p>
+    {% endif %}
+
+    {% if description.bullets %}
+        <ul class="list-group list-group-flush">
+            {% for point in description.bullets %}
+                <li class="list-group-item">{{ point }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if description.note %}
+        <div class="alert alert-info mt-3">
+            <strong>Note:</strong> {{ description.note }}
+        </div>
+    {% endif %}
+
+
+
+        <!-- Navigation Buttons -->
+        <div class="btn-group">
+            <a href="{{ url_for('predict.show_upload_form') }}">🔁 Check Another Image</a>
+            <a href="{{ url_for('main.chatbot') }}">🤖 Ask VitaminBot</a>
+            <a href="{{ url_for('main.dashboard') }}">🏠 Back to Home</a>
+            <a href="{{ url_for('main.logout') }}">🚪 Logout</a>
+            <a href="{{ url_for('predict.remedies', vitamin=predicted_vitamin, image_filename=uploaded_img.split('/')[-1]) }}">
+                🍀 View Remedies for {{ predicted_vitamin }}
+            </a>
+            
+
+            
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-image: url("{{ url_for('static', filename='img/remedies1.jpeg') }}");
+        background-color: #f4f8fb;
+        margin: 0;
+        padding: 0;
+        background-size: cover;
+        color: #fff;
+    }
+
+    .tips-container {
+        max-width: 900px;
+        margin: 50px auto;
+        padding: 40px;
+        color: #0e0202;
+        background-color: rgba(255, 255, 255, 0.8); /* Box background color */
+        border-radius: 12px; /* Rounded corners for the box */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow to make the box stand out */
+    }
+
+    h1 {
+        font-size: 28px;
+        color: #2c0505;
+        margin-bottom: 10px;
+    }
+
+    p {
+        font-size: 16px;
+        line-height: 1.6;
+        color: #240606;
+        margin-bottom: 20px;
+    }
+
+    p strong {
+        color: #f39c12; /* Highlight color for strong text */
+    }
+
+    .highlight {
+        font-size: 18px;
+        color: #16a085;
+        margin-bottom: 30px;
+        font-weight: 500;
+    }
+
+    a {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #3498db;
+        color: rgb(28, 4, 4);
+        text-decoration: none;
+        border-radius: 6px;
+        transition: background-color 0.3s ease;
+    }
+
+    a:hover {
+        background-color: #2980b9;
+    }
+</style>
+
+<div class="tips-container">
+    <h1>Nutrition Tips & Remedies for {{ vitamin }}</h1>
+    
+    <p><strong>⚠️ Common Symptoms:</strong> {{ symptoms }}</p>
+    <p><strong>🥗 Recommended Foods:</strong> {{ foods }}</p>
+    <p><strong>💡 General Tips:</strong> </p>
+  <ul>
+  {% for tip in tips_list %}
+    <li>{{ tip }}</li>
+  {% endfor %}
+</ul>
+
+{% if note %}
+  <div style="background-color: #90d8f2; padding: 10px; border-left: 5px solid #007BFF; margin-top: 20px;">
+    <strong>Note:</strong> {{ note }}
+  </div>
+{% endif %}
+
+   
+    <a href="{{ url_for('predict.predict_image', filename=image_filename) }}" class="back-button">← Back to Result</a>
+
+{% endblock %}

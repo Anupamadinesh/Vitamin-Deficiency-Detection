@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background: url("{{ url_for('static', filename='img/bg2.jpeg') }}") no-repeat center center fixed;
+        background-size: cover;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .login-container {
+        max-width: 420px;
+        margin: 80px auto;
+        padding: 40px;
+        background: rgba(255, 255, 255, 0.1); /* Adjust opacity */
+        border-radius: 16px;
+        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        backdrop-filter: blur(10px); /* Frosted glass effect */
+        -webkit-backdrop-filter: blur(10px); /* For Safari */
+    }
+
+    .login-title {
+        font-size: 26px;
+        font-weight: bold;
+        margin-bottom: 25px;
+        color: #333;
+    }
+
+    .form-control {
+        margin-bottom: 15px;
+        font-size: 15px;
+        padding: 12px;
+        border-radius: 10px;
+        background-color: rgba(255, 255, 255, 0.9); /* Light background for inputs */
+        color: #333;
+    }
+
+    .btn-login {
+        background-color: #17a2b8;
+        color: white;
+        border: none;
+        padding: 12px;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        width: 100%;
+        transition: 0.3s ease;
+    }
+
+    .btn-login:hover {
+        background-color: #138496;
+    }
+
+    .signup-link {
+        display: block;
+        margin-top: 15px;
+        font-size: 14px;
+    }
+    .signup-link a{
+        color: #007bff;
+    }
+</style>
+
+<div class="login-container">
+    <h2 class="login-title">Login to Your Account</h2>
+    <form method="POST" >
+        {{ form.hidden_tag() }}
+    
+        <div class="mb-3">
+            {{ form.email.label(class="form-label") }}
+            {{ form.email(class="form-control", placeholder="Enter your email") }}
+        </div>
+        <div class="mb-3">
+            {{ form.password.label(class="form-label") }}
+            {{ form.password(class="form-control", placeholder="Enter your password") }}
+        </div>
+        <button type="submit" class="btn btn-login">{{ form.submit.label.text }}</button>
+    </form>
+   <div class="signup-link">
+    Don't have an account? <a href="{{ url_for('main.signup') }}" >Sign up</a>
+</div>
+{% endblock %}

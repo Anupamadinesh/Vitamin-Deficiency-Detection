@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}Signup{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background: url("{{ url_for('static', filename='img/bg2.jpeg') }}") no-repeat center center fixed;
+        background-size: cover;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .signup-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .signup-box {
+        background: rgba(255, 255, 255, 0.1); /* Slightly more transparent for frosted glass effect */
+        border-radius: 16px;
+        padding: 35px;
+        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+        width: 100%;
+        max-width: 420px;
+        backdrop-filter: blur(10px); /* Frosted glass effect */
+        -webkit-backdrop-filter: blur(10px); /* Safari */
+    }
+
+    .signup-title {
+        font-size: 26px;
+        font-weight: bold;
+        margin-bottom: 25px;
+        text-align: center;
+        color: #333; /* Dark color for title */
+    }
+
+    .form-control {
+        border-radius: 10px;
+        font-size: 15px;
+        padding: 12px;
+        background-color: rgba(255, 255, 255, 0.9); /* Light background for input fields */
+        color: #333; /* Dark text color */
+        margin-bottom: 15px;
+    }
+
+    .btn-signup {
+        background-color: #007bff;
+        border: none;
+        border-radius: 10px;
+        padding: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        width: 100%;
+        transition: 0.3s ease;
+    }
+
+    .btn-signup:hover {
+        background-color: #0056b3;
+    }
+
+    .login-link {
+        margin-top: 15px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .login-link a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .login-link a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="signup-container">
+    <div class="signup-box">
+        <h2 class="signup-title">Create Your Account</h2>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="mb-3">
+                {{ form.username.label(class="form-label") }}
+                {{ form.username(class="form-control", placeholder="Enter username") }}
+            </div>
+            <div class="mb-3">
+                {{ form.email.label(class="form-label") }}
+                {{ form.email(class="form-control", placeholder="Enter email") }}
+            </div>
+            <div class="mb-3">
+                {{ form.password.label(class="form-label") }}
+                {{ form.password(class="form-control", placeholder="Enter password") }}
+            </div>
+            <div class="mb-4">
+                {{ form.confirm_password.label(class="form-label") }}
+                {{ form.confirm_password(class="form-control", placeholder="Confirm password") }}
+            </div>
+            <button type="submit" class="btn btn-signup">{{ form.submit.label.text }}</button>
+        </form>
+        <div class="login-link">
+            Already have an account? <a href="{{ url_for('main.login') }}">Login here</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
