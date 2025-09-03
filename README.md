@@ -13,3 +13,8 @@ This project is a Flask-based web application that detects vitamin deficiencies 
 1. Clone the repository:
    ```bash
    git clone https://github.com/Anupamadinesh/Vitamin-Deficiency-Detection.git
+
+## Note
+
+This project includes a Flask backend for prediction, which cannot be deployed directly on GitHub Pages.
+The GitHub Pages link provides the frontend files for review.
