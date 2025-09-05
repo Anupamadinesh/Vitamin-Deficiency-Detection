@@ -10,7 +10,7 @@ from openai import OpenAI
 
 # ✅ OpenRouter API client setup
 client = OpenAI(
-    api_key="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",
+    api_key="keys",
     base_url="https://openrouter.ai/api/v1"  # IMPORTANT for OpenRouter
 )
 
